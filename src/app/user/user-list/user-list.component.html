@@ -1,0 +1,25 @@
+<a routerLink="/add">➕ Add User</a>
+
+<div *ngIf="loading" class="loading">
+  Loading users...
+</div>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
+
+<div *ngIf="success" class="success">
+    {{ success }}
+  </div>
+  
+<ul *ngIf="!loading && !error">
+  <li *ngFor="let user of users">
+    {{ user.firstName }} {{ user.lastName }} ({{ user.email }})
+    <a [routerLink]="['/edit', user.id]">Edit</a>
+    <button (click)="deleteUser(user.id)">Delete</button>
+  </li>
+</ul>
+
+<div *ngIf="!loading && !error && users.length === 0" class="no-users">
+  No users found.
+</div>

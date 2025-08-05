@@ -1,0 +1,44 @@
+<div class="auth-container">
+    <h2 *ngIf="isLoginMode">Login</h2>
+    <h2 *ngIf="!isLoginMode">Register</h2>
+  
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="!isLoginMode">
+            <label>First Name:</label>
+            <input type="text" formControlName="firstName" />
+            <div *ngIf="authForm.get('firstName')?.hasError('required') && authForm.get('firstName')?.touched">
+            First Name is required
+            </div>
+            <label>Last Name:</label>
+            <input type="text" formControlName="lastName" />
+            <div *ngIf="authForm.get('lastName')?.hasError('required') && authForm.get('lastName')?.touched">
+              Last Name is required
+            </div>
+            <label>Phone Number:</label>
+            <input type="text" formControlName="phoneNumber" />
+        </div>
+      <!-- Shared: Email -->
+      <label>Email:</label>
+      <input type="email" formControlName="email" />
+      <div *ngIf="authForm.get('email')?.touched && authForm.get('email')?.invalid">
+        Email is required and must be valid.
+      </div>
+  
+      <!-- Shared: Password -->
+      <label>Password:</label>
+      <input type="password" formControlName="password" />
+      <div *ngIf="authForm.get('password')?.touched && authForm.get('password')?.invalid">
+        Password is required (min 6 characters).
+      </div>
+      <button type="submit" [disabled]="authForm.invalid">
+        {{ isLoginMode ? 'Login' : 'Register' }}
+      </button>
+    </form>
+  
+    <!-- Toggle Button -->
+    <p>
+      {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+      <button (click)="toggleMode()">{{ isLoginMode ? 'Register' : 'Login' }}</button>
+    </p>
+  </div>
+  
